@@ -6,6 +6,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
+import { USER_API_END_POINT } from "../../utils/constant";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -22,9 +26,28 @@ const Login = () => {
     setInput({ ...input, file: e.target.files[0] });
   };
 
+  const navigate = useNavigate();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(input);
+
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res?.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message);
+    }
   };
   return (
     <div>
@@ -32,9 +55,7 @@ const Login = () => {
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           className="w-1/2 border border-ray-200 rounded-md p-4 my-10"
-          action="
-        
-        "
+          onSubmit={submitHandler}
         >
           <h1 className="font-bold text-xl nb-5">Login</h1>
 

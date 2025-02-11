@@ -27,7 +27,9 @@ export const postJob = async (req, res) => {
       !position ||
       !companyId
     ) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ message: "All fields are required", success: false });
     }
     const job = await Job.create({
       title,
@@ -41,7 +43,9 @@ export const postJob = async (req, res) => {
       company: companyId,
       createdBy: userId,
     });
-    return res.status(201).json({ message: "Job posted successfully", job });
+    return res
+      .status(201)
+      .json({ message: "Job posted successfully", job, success: true });
   } catch (error) {
     console.log(error);
   }
@@ -60,9 +64,9 @@ export const getAllJobs = async (req, res) => {
       .populate({ path: "company" })
       .sort({ createdAt: -1 });
     if (!jobs) {
-      return res.status(404).json({ message: "No jobs found" });
+      return res.status(404).json({ message: "No jobs found", success: false });
     }
-    return res.status(200).json(jobs);
+    return res.status(200).json({ jobs, success: true });
   } catch (error) {
     console.log(error);
   }
@@ -73,9 +77,9 @@ export const getJobById = async (req, res) => {
     const jobId = req.params.id;
     const job = await Job.findById(jobId);
     if (!job) {
-      return res.status(404).json({ message: "Job not found" });
+      return res.status(404).json({ message: "Job not found", success: false });
     }
-    return res.status(200).json(job);
+    return res.status(200).json({ job, success: true });
   } catch (error) {
     console.log(error);
   }
@@ -88,9 +92,9 @@ export const getAdminJobs = async (req, res) => {
     const adminId = req.id;
     const jobs = await Job.find({ createdBy: adminId });
     if (!jobs) {
-      return res.status(404).json({ message: "No jobs found" });
+      return res.status(404).json({ message: "No jobs found", success: false });
     }
-    return res.status(200).json(jobs);
+    return res.status(200).json({ jobs, success: true });
   } catch (error) {
     console.log(error);
   }

@@ -4,11 +4,15 @@ export const registerCompany = async (req, res) => {
     console.log("req.id", req.id);
     const { companyName } = req.body;
     if (!companyName) {
-      return res.status(400).json({ message: "Company name is required" });
+      return res
+        .status(400)
+        .json({ message: "Company name is required", success: false });
     }
     let company = await Company.findOne({ companyName });
     if (company) {
-      return res.status(400).json({ message: "Company already exists" });
+      return res
+        .status(400)
+        .json({ message: "Company already exists", success: false });
     }
     company = await Company.create({
       name: companyName,
@@ -17,10 +21,14 @@ export const registerCompany = async (req, res) => {
 
     return res
       .status(201)
-      .json({ message: "Company registered successfully", company });
+      .json({
+        message: "Company registered successfully",
+        company,
+        success: true,
+      });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };
 
@@ -29,12 +37,14 @@ export const getCompany = async (req, res) => {
     const userId = req.id; //logged in user id, usi ki registered companies show hongi
     const companies = await Company.find({ userId });
     if (!companies) {
-      return res.status(404).json({ message: "No company found" });
+      return res
+        .status(404)
+        .json({ message: "No company found", success: false });
     }
-    return res.status(200).json({ companies });
+    return res.status(200).json({ companies, success: true });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };
 
@@ -44,12 +54,14 @@ export const getCompanyById = async (req, res) => {
     const companyId = req.params.id;
     const company = await Company.findById({ _id: companyId });
     if (!company) {
-      return res.status(404).json({ message: "Company not found" });
+      return res
+        .status(404)
+        .json({ message: "Company not found", success: false });
     }
-    return res.status(200).json({ company, message: "Success" });
+    return res.status(200).json({ company, message: "Success", success: true });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };
 
@@ -68,14 +80,20 @@ export const updateCompany = async (req, res) => {
       new: true,
     });
     if (!company) {
-      return res.status(404).json({ message: "Company not found" });
+      return res
+        .status(404)
+        .json({ message: "Company not found", success: false });
     }
 
     return res
       .status(200)
-      .json({ message: "Company information updated successfully", company });
+      .json({
+        message: "Company information updated successfully",
+        company,
+        success: true,
+      });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 };
