@@ -18,12 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Change this to match your frontend URL
-    credentials: true, // Allow cookies & authentication headers
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
+    origin: allowedOrigins, // Allow specific frontend ports
+    credentials: true, // Allow credentials (cookies, sessions, etc.)
   })
 );
 

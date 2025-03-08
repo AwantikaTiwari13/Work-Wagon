@@ -11,7 +11,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_END_POINT } from "../../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../redux/authSlice";
+import { setLoading, setUser } from "../../redux/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
@@ -47,6 +47,10 @@ const Login = () => {
       });
 
       if (res.data.success) {
+        console.log("User data received:", res.data.user); // Log user data
+        dispatch(setUser(res.data.user));
+        console.log("User state after dispatch:", res.data.user); // Log after dispatch
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         navigate("/");
         toast.success(res?.data.message);
       }

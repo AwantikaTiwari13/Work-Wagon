@@ -73,10 +73,11 @@ export const login = async (req, res) => {
       profilePhoto: user.profilePhoto,
     };
 
-    res
-      .status(200)
-      .cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true })
-      .json({ message: "Login successful", success: true });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      user, // ✅ Make sure `user` is sent in the response
+    });
   } catch (error) {
     console.log(error);
   }
