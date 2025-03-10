@@ -111,6 +111,7 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
 
     //cloudinary setup
+    const fileUri = getUri;
 
     const skillsArray = skills?.split(",");
     const userId = req.id; //middleware authentification
