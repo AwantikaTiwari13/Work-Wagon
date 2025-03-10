@@ -52,6 +52,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     if (input.file) formData.append("file", input.file);
 
     try {
+      setLoading(true);
       const res = await axios.post(
         `${USER_API_END_POINT}/update-profile`,
         formData,
@@ -159,6 +160,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 type="file"
                 accept="application/pdf"
                 className="col-span-3"
+                value={input.file?.name || ""}
                 onChange={fileChangeHandler}
               />
             </div>

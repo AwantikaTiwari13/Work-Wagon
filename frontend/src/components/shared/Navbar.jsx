@@ -11,17 +11,39 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
 import { setUser } from "../../redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/utils/constant";
+import { toast } from "sonner";
 
 const Navbar = () => {
   // const user = true;
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser && storedUser !== "undefined") {
       dispatch(setUser(JSON.parse(storedUser))); // ✅ Ensure it's not undefined
     }
   }, [dispatch]);
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res?.data?.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        localStorage.removeItem("user");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to logout");
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between  mx-auto max-w-7xl h-16">
@@ -60,7 +82,7 @@ const Navbar = () => {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src="https://github.com/shadcn.png"
+                    src={user?.profile?.profilePhoto}
                     alt="@shadcn"
                   />
                 </Avatar>
@@ -69,7 +91,7 @@ const Navbar = () => {
                 <div className="flex  gap-4 space-y-2">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="https://github.com/shadcn.png"
+                      src={user?.profile?.profilePhoto}
                       alt="@shadcn"
                     />
                   </Avatar>
@@ -89,7 +111,9 @@ const Navbar = () => {
                   </div>
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     {/* <LogOut /> */}
-                    <Button variant="link">Logout</Button>
+                    <Button onClick={logoutHandler} variant="link">
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>

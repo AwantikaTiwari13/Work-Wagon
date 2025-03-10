@@ -60,11 +60,13 @@ const Profile = () => {
           </div>
         </div>
         <div className="grid w-full mas-w-sm items-center gap-1.5">
-          <Label className="text-md font-bold">resume</Label>
+          <Label className="text-md font-bold">
+            {user?.profile?.resumeOriginalName}
+          </Label>
           {isHaveResume ? (
             <a
               target="blank"
-              href="https://www.google.com"
+              href={user?.profile?.resume}
               className="text-blue-500 w-full hover:underline cursor-pointer"
             >
               view resume
