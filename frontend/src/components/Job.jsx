@@ -3,8 +3,12 @@ import { Button } from "./ui/button";
 import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const Job = () => {
+  const jobId = 1;
+  const navigate = useNavigate();
+
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-200">
       <div className="flex items-center justify between">
@@ -17,7 +21,10 @@ const Job = () => {
       <div className="flex items-center gap-2 my-4">
         <Button className="p-6" variant="outline" size="icon">
           <Avatar>
-            <AvatarImage src="https://imgs.search.brave.com/3xDrIdES3qHkd8t-ZNV2VeM2QhFUNl90bcIP58nIw0E/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtcGxhdGZvcm0u/OTlzdGF0aWMuY29t/Ly92bWV6Rkhtczdq/cjE3YVRoc2pISkh6/ejdPRnM9LzB4MDo5/NjB4OTYwL2ZpdC1p/bi81MDB4NTAwLzk5/ZGVzaWducy1jb250/ZXN0cy1hdHRhY2ht/ZW50cy83OS83OTE3/Ny9hdHRhY2htZW50/Xzc5MTc3MDM1.jpeg" />
+            <AvatarImage
+              src="
+            "
+            />
           </Avatar>
         </Button>
         <div>
@@ -44,7 +51,11 @@ const Job = () => {
         </Badge>
       </div>
       <div className="flex items-center gap-4 mt-4">
-        <Button className="rounded-lg" variant="outline">
+        <Button
+          onClick={() => navigate(`/description/${jobId}`)}
+          className="rounded-lg"
+          variant="outline"
+        >
           Details
         </Button>
         <Button className="bg-[#6A38C2] text-white rounded-lg">
