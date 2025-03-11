@@ -82,11 +82,20 @@ export const login = async (req, res) => {
       profile: user.profile,
     };
 
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      user, // ✅ Make sure `user` is sent in the response
-    });
+    console.log("Setting token in cookies");
+    res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
+      .json({
+        success: true,
+        message: "Login successful",
+        user,
+        token,
+      });
   } catch (error) {
     console.log(error);
   }

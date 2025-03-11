@@ -1,18 +1,28 @@
 import jwt from "jsonwebtoken";
+
 const isAuth = async (req, res, next) => {
   try {
-    const token =
-      req.headers.authorization?.split(" ")[1] || req.cookies?.token;
-    if (!token) return res.status(401).json({ message: "Unauthorized" });
-    const decoded = await jwt.verify(token, process.env.SECRET_KEY);
-    // console.log("decoded token", decoded);
-    if (!decoded) {
-      return res.status(401).json({ message: "Unauthorized" });
+    const token = req.cookies?.token;
+    if (!token) {
+      console.log("No token found in cookies");
+      return res.status(401).json({
+        message: "User not authenticated",
+        success: false,
+      });
     }
+
+    const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+    if (!decoded) {
+      console.log("Token verification failed");
+      return res.status(401).json({ message: "Unauthorized", success: false });
+    }
+
+    console.log("Token decoded successfully", decoded);
     req.id = decoded.id;
     next();
   } catch (error) {
-    console.log(error);
+    console.log("Error in isAuth middleware:", error);
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };
 

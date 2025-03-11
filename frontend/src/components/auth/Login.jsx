@@ -13,6 +13,7 @@ import { USER_API_END_POINT } from "../../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "../../redux/authSlice";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -20,14 +21,10 @@ const Login = () => {
     password: "",
     role: "",
   });
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
-  };
-
-  const changeFileHandler = (e) => {
-    setInput({ ...input, file: e.target.files[0] });
   };
 
   const navigate = useNavigate();
@@ -61,6 +58,13 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   return (
     <div>
       <Navbar />

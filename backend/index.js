@@ -23,7 +23,7 @@ const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
 app.use(
   cors({
     origin: allowedOrigins, // Allow specific frontend ports
-    credentials: true, // Allow credentials (cookies, sessions, etc.)
+    credentials: true,
   })
 );
 
