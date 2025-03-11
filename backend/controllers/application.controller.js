@@ -96,6 +96,8 @@ export const getApplicants = async (req, res) => {
     }
     return res.status(200).json({
       job,
+      applicants: job.applications, // Send all application details
+      totalApplications: job.applications.length, // Send total count
       success: true,
     });
   } catch (error) {
