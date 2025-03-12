@@ -11,8 +11,11 @@ import { COMPANY_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
+  const params = useParams();
+  useGetCompanyById(params.id);
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -28,7 +31,7 @@ const CompanySetup = () => {
   const changeFileHandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
   };
-  const params = useParams();
+
   const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();

@@ -13,11 +13,27 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const CompaniesTable = () => {
-  const { companies } = useSelector((store) => store.company);
+  const { companies, searchCompanyByText } = useSelector(
+    (store) => store.company
+  );
   const navigate = useNavigate();
 
+  const [filterCompany, setFilterCompany] = useState(companies);
+
+  useEffect(() => {
+    const filteredCompany =
+      companies.length >= 0 &&
+      companies.filter((company) => {
+        if (!searchCompanyByText) setFilterCompany(companies);
+        return company?.name
+          ?.toLowerCase()
+          .includes(searchCompanyByText.toLowerCase());
+      });
+    setFilterCompany(filteredCompany);
+  }, [companies, searchCompanyByText]);
   return (
     <div>
       <Table>
@@ -31,7 +47,7 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies?.map((company) => (
+          {filterCompany?.map((company) => (
             <tr key={company._id}>
               <TableCell>
                 <Avatar>
@@ -46,7 +62,12 @@ const CompaniesTable = () => {
                     <MoreHorizontal />
                   </PopoverTrigger>
                   <PopoverContent className="w-32">
-                    <div className="flex items-center gap-2 w-fit cursor-pointer">
+                    <div
+                      onClick={() =>
+                        navigate(`/admin/company/update/${company._id}`)
+                      }
+                      className="flex items-center gap-2 w-fit cursor-pointer"
+                    >
                       <Edit2 className="w-12" />
                       <span>Edit</span>
                     </div>
