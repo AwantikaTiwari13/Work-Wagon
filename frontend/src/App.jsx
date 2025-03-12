@@ -14,6 +14,10 @@ import Navbar from "./components/shared/Navbar";
 import { Toaster } from "sonner";
 import { Button } from "./components/ui/button";
 import { Provider } from "react-redux";
+import store from "./redux/store";
+import Companies from "./components/admin/Companies";
+import CompanyCreate from "./components/admin/CompanyCreate";
+import CompanySetup from "./components/admin/CompanySetup";
 
 const appRouter = createBrowserRouter([
   {
@@ -43,6 +47,19 @@ const appRouter = createBrowserRouter([
   {
     path: "/description/:id",
     element: <JobDescription />,
+  },
+  // for admin, starts here
+  {
+    path: "/admin/companies",
+    element: <Companies />,
+  },
+  {
+    path: "/admin/company/create",
+    element: <CompanyCreate />,
+  },
+  {
+    path: "/admin/company/create/:id",
+    element: <CompanySetup />,
   },
 ]);
 function App() {
