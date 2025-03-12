@@ -12,7 +12,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { PersistGate } from "redux-persist/integration/react";
 import { combineReducers } from "redux";
 import companySlice from "./companySlice";
 
@@ -24,7 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authSlice,
-  job: jobSlice,
+  job: jobSlice, // Ensure this is correctly added
   company: companySlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,6 +36,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  devTools: process.env.NODE_ENV !== "production", // Enable Redux DevTools in development mode
 });
 
 export default store;
