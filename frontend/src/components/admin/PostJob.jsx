@@ -89,7 +89,7 @@ const PostJob = () => {
             </div>
             <div>
               <Label>Description</Label>
-              <textarea
+              <input
                 name="description"
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 value={input.description}
@@ -98,7 +98,7 @@ const PostJob = () => {
             </div>
             <div>
               <Label>Requirements</Label>
-              <textarea
+              <input
                 name="requirements"
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                 value={input.requirements}

@@ -40,6 +40,7 @@ export const applyJob = async (req, res) => {
 
     job.applications.push(newApplication._id);
     await job.save();
+    console.log("Updated job applications:", job.applications);
     return res.status(201).json({
       message: "Job applied successfully.",
       success: true,
@@ -79,6 +80,7 @@ export const getAppliedJobs = async (req, res) => {
 export const getApplicants = async (req, res) => {
   try {
     const jobId = req.params.id;
+
     const job = await Job.findById(jobId)
       .populate({
         path: "applications",
@@ -88,6 +90,7 @@ export const getApplicants = async (req, res) => {
         },
       })
       .populate("company");
+    console.log("Job found:", job);
     if (!job) {
       return res.status(404).json({
         message: "Job not found.",
@@ -96,8 +99,7 @@ export const getApplicants = async (req, res) => {
     }
     return res.status(200).json({
       job,
-      applicants: job.applications, // Send all application details
-      totalApplications: job.applications.length, // Send total count
+
       success: true,
     });
   } catch (error) {
