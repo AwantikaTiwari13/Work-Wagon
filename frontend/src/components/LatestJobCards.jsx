@@ -1,15 +1,18 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const LatestJobCards = ({ job }) => {
   const navigate = useNavigate();
   return (
-    <div
+    <motion.div
       onClick={() => {
         navigate(`/description/${job._id}`);
       }}
       className="p-5 rounded-md shadow-xl bg-white border border-gray-100"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       <div>
         <h1 className="font-md text-lg">{job?.company?.name}</h1>
@@ -30,7 +33,7 @@ const LatestJobCards = ({ job }) => {
           {job?.salary} lpa
         </Badge>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

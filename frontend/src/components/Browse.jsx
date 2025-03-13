@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import { setSearchedQuery } from "@/redux/jobSlice";
 import { useDispatch } from "react-redux";
 import useGetAllJobs from "@/hooks/useGetAllJobs";
-
-const randomJobs = [1, 2, 3];
+import { motion } from "framer-motion";
 
 const Browse = () => {
   useGetAllJobs();
@@ -17,7 +16,8 @@ const Browse = () => {
     return () => {
       dispatch(setSearchedQuery(""));
     };
-  });
+  }, [dispatch]);
+
   return (
     <div>
       <Navbar />
@@ -26,9 +26,17 @@ const Browse = () => {
           Search Results ({allJobs.length})
         </h1>
         <div className="grid grid-cols-3 gap-4 mt-5">
-          {allJobs.map((job) => {
-            return <Job key={job._id} />;
-          })}
+          {allJobs.map((job) => (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+              key={job._id}
+            >
+              <Job job={job} />
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>

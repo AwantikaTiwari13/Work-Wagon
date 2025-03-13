@@ -4,9 +4,9 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Job = ({ job }) => {
-  // const jobId = 1;
   const navigate = useNavigate();
   const daysAgoFunction = (mongodbTime) => {
     const currentTime = new Date(mongodbTime);
@@ -15,7 +15,11 @@ const Job = ({ job }) => {
   };
 
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-200">
+    <motion.div
+      className="p-5 rounded-md shadow-xl bg-white border border-gray-200"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
       <div className="flex items-center justify between">
         <p className="text-sm text-gray-500">
           {daysAgoFunction(job?.createdAt) === 0
@@ -66,7 +70,7 @@ const Job = ({ job }) => {
           Save for Later
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
