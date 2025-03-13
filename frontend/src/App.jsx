@@ -22,6 +22,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import { useEffect } from "react";
 
 const appRouter = createBrowserRouter([
   {
@@ -54,34 +55,53 @@ const appRouter = createBrowserRouter([
   },
   // for admin, starts here
   {
-    path: "/admin",
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: "companies",
-        element: <Companies />,
-      },
-      {
-        path: "company/create",
-        element: <CompanyCreate />,
-      },
-      {
-        path: "jobs",
-        element: <AdminJobs />,
-      },
-      {
-        path: "company/update/:id",
-        element: <CompanySetup />,
-      },
-      {
-        path: "job/create",
-        element: <PostJob />,
-      },
-      {
-        path: "jobs/:id/applicants",
-        element: <Applicants />,
-      },
-    ],
+    path: "/admin/companies",
+    element: (
+      <ProtectedRoute>
+        <Companies />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/company/create",
+    element: (
+      <ProtectedRoute>
+        <CompanyCreate />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/jobs",
+    element: (
+      <ProtectedRoute>
+        <AdminJobs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/company/update/:id",
+    element: (
+      <ProtectedRoute>
+        <CompanySetup />
+      </ProtectedRoute>
+    ),
+  },
+
+  {
+    path: "/admin/job/create",
+    element: (
+      <ProtectedRoute>
+        <PostJob />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/jobs/:id/applicants",
+    element: (
+      <ProtectedRoute>
+        <Applicants />
+      </ProtectedRoute>
+    ),
   },
 ]);
 function App() {
