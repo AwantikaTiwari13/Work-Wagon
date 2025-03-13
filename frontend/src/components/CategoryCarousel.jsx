@@ -14,15 +14,29 @@ const category = [
   "Full Stack Developer",
   "Graphic Designer",
 ];
+import { useDispatch } from "react-redux";
+import { setSearchedQuery } from "@/redux/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 const CategoryCarousel = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const searchJobHandler = (query) => {
+    dispatch(setSearchedQuery(query));
+    navigate("/browse");
+  };
   return (
     <div>
       <Carousel className="w-full max-w-xl mx-auto my-20">
         <CarouselContent>
           {category.map((cat, index) => (
             <CarouselItem className="md:basis-1/2 lg-basis-1/3">
-              <Button className="bg-[#6A38C2] text-white rounded">{cat}</Button>
+              <Button
+                onClick={() => searchJobHandler(cat)}
+                className="bg-[#6A38C2] text-white rounded"
+              >
+                {cat}
+              </Button>
             </CarouselItem>
           ))}
         </CarouselContent>
