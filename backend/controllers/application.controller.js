@@ -19,7 +19,7 @@ export const applyJob = async (req, res) => {
 
     if (existingApplication) {
       return res.status(400).json({
-        message: "You have already applied for this jobs",
+        message: "You have already applied for this job",
         success: false,
       });
     }
@@ -40,7 +40,7 @@ export const applyJob = async (req, res) => {
 
     job.applications.push(newApplication._id);
     await job.save();
-    console.log("Updated job applications:", job.applications);
+
     return res.status(201).json({
       message: "Job applied successfully.",
       success: true,
@@ -49,6 +49,10 @@ export const applyJob = async (req, res) => {
     console.log(error);
   }
 };
+// to check which jobs i/user have applied to
+// this is for student, to see which jobs he has applied to
+// this will be used in the applied jobs page
+
 export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;

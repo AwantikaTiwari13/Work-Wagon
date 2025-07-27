@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between  mx-auto max-w-7xl h-16">
         <div>
           <h1 className="text-2xl font-bold">
-            Job <span className="text-[#F83002]">Portal</span>{" "}
+            Work <span className="text-[#F83002]">Wagon</span>{" "}
           </h1>
         </div>
         <div className="flex items-center gap-12">
@@ -112,7 +112,7 @@ const Navbar = () => {
                   <div>
                     <h4 className="font-medium">Awantika</h4>
                     <p className="text-small text-muted-foreground">
-                      Lorem ipsum dolor sit amet.
+                      Your career's next destination awaits.
                     </p>
                   </div>
                 </div>
