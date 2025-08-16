@@ -4,6 +4,9 @@ import { Job } from "../models/job.model.js";
 export const postJob = async (req, res) => {
   try {
     // console.log("Received Data:", req.body);
+    if (req.user.role !== "recruiter") {
+      return res.status(403).json({ message: "Access denied", success: false });
+    }
     const {
       title,
       description,
@@ -16,6 +19,7 @@ export const postJob = async (req, res) => {
       companyId,
     } = req.body;
     const userId = req.id;
+
     if (
       !title ||
       !description ||

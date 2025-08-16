@@ -15,7 +15,10 @@ const isAuth = async (req, res, next) => {
     if (!decoded) {
       return res.status(401).json({ message: "Unauthorized", success: false });
     }
-    req.id = decoded.id;
+    req.user = {
+      id: decoded.id,
+      role: decoded.role, // Add this in your token when signing
+    };
     next();
   } catch (error) {
     console.log("Error in isAuth middleware:", error);
@@ -24,3 +27,25 @@ const isAuth = async (req, res, next) => {
 };
 
 export default isAuth;
+
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    // Assumes isAuth middleware has already run and attached req.user
+    if (!req.user || !req.user.role) {
+      // This case should ideally not be hit if isAuth is always used before this.
+      return res
+        .status(401)
+        .json({ message: "Authentication error, user data missing." });
+    }
+
+    const userRole = req.user.role;
+    if (!allowedRoles.includes(userRole)) {
+      // User's role is not permitted.
+      return res.status(403).json({
+        message: `Forbidden: Role '${userRole}' is not authorized to access this resource.`,
+        success: false,
+      });
+    }
+    next();
+  };
+};
