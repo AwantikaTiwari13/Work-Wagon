@@ -127,7 +127,7 @@ To get a local copy up and running, follow these simple steps.
 
 ## 👤 About Me
 
-This project was developed by Awantika Tiwari. Connect with me:
+This project was developed by Awantika Tiwari along with Shashwat Tiwari. Connect with me:
 
 * **GitHub**: [AwantikaTiwari13](https://github.com/AwantikaTiwari13)
 * **LinkedIn**: [Awantika Tiwari](https://www.linkedin.com/in/awantika-tiwari-aa6b97263/)
